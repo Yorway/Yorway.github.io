@@ -94,7 +94,7 @@
 <meta property="og:url" content="http://yorway.com/2017/04/19/Submodular Optimization/index.html">
 <meta property="og:site_name" content="$\rm{O}\Theta \Omega$">
 <meta property="og:description" content="概念1) 什么是Set Function？维基百科的定义如下：  In mathematics, a set function is a function whose input is a set. The output is usually a number. Often the input is a set of real numbers, a set of points in Euclide">
-<meta property="og:updated_time" content="2017-04-19T16:36:11.000Z">
+<meta property="og:updated_time" content="2017-04-20T01:01:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Submodular Optimization：概念、算法、加速">
 <meta name="twitter:description" content="概念1) 什么是Set Function？维基百科的定义如下：  In mathematics, a set function is a function whose input is a set. The output is usually a number. Often the input is a set of real numbers, a set of points in Euclide">
@@ -335,7 +335,7 @@
 <p>对于$z$需要满足的条件有另外一种等价的表述：<br>$$<br>z(S\cup {k})-z(S)\leq z(R\cup {k})-z(R), ~~R\subset S\subset N, ~~k\in N-S \tag{1}<br>$$<br>&emsp;&emsp;&emsp;&emsp; $(1)$称为diminishing returns property。为什么叫“回报减小”呢？举例。</p>
 <p>进一步说明，<br>$$<br>z(S\cup {k})-z(S)\geq 0, ~~S\subset N, ~~k\in N-S \tag{2}<br>$$<br>定义在$N$的子集上的实值函数$z(S)$满足$(1)$叫做submodular set function；同时满足$(1)$和$(2)$则叫做submodular nondecreasing set function。 </p>
 <p>另外，如果$z(\emptyset)=0$, $z$是normalized的。</p>
-<p><strong>3) 什么是Submodular Optimization？</strong><br>$$<br>\max_{S\subseteq N}{z(S):\left|S\right|\leq K, z(S) ~\rm{submodular} } \tag{3}<br>$$<br>找到$N$的一个子集$S$, $S$的基数（ Cardinality，即$S$中元素个数）不大于$K$，并使得$z(S)$取得最大值。</p>
+<p><strong>3) 什么是Submodular Optimization？</strong><br>$$<br>\max_{S\subseteq N}\left{z(S):\left|S\right|\leq K, z(S) ~\rm{submodular} \right} \tag{3}<br>$$<br>找到$N$的一个子集$S$, $S$的基数（ Cardinality，即$S$中元素个数）不大于$K$，并使得$z(S)$取得最大值。</p>
 <p>变种<br>$$<br>\max_{S\subseteq N}{z(S):c(S)\leq K, z(S) ~\rm{submodular} }<br>$$</p>
 <p>$$<br>c(S)=\sum_{s\in S}c(s)<br>$$</p>
 <h1 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h1><blockquote>
