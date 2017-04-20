@@ -334,17 +334,17 @@
 <p>Let $N$ be a finite set and $z$ be a real-valued function defined on the set of subsets of $N$ that satisfies $z(S)+z(T)\geq z(S\cup T)+z(S\cap T)$ for all $S$, $T$ in $N$. Such a function is called submodular.</p>
 </blockquote>
 <p>重述一下：$N$是一个有限集，$z$是一个定义在$N$的子集上的实值函数，如果对于$N$的所有子集$S$和$T$, $z$都满足$z(S)+z(T)\geq z(S\cup T)+z(S\cap T)$，那么就说该函数是次模（Submodular）的。</p>
-<p>对于$z$需要满足的条件有另外一种等价的表述：<br>$$<br>z(S\cup {k})-z(S)\leq z(R\cup {k})-z(R), ~~R\subset S\subset N, ~~k\in N-S \tag{1}<br>$$<br>&emsp;&emsp;&emsp;&emsp; $(1)$称为diminishing returns property。为什么叫“回报减小”呢？举例。</p>
-<p>进一步说明，<br>$$<br>z(S\cup {k})-z(S)\geq 0, ~~S\subset N, ~~k\in N-S \tag{2}<br>$$<br>定义在$N$的子集上的实值函数$z(S)$满足$(1)$叫做submodular set function；同时满足$(1)$和$(2)$则叫做submodular nondecreasing set function。 </p>
+<p>对于$z$需要满足的条件有另外一种等价的表述：<br>$$<br>z(S\cup \{k\})-z(S)\leq z(R\cup \{k\})-z(R), ~~R\subset S\subset N, ~~k\in N-S \tag{1}<br>$$<br>&emsp;&emsp;&emsp;&emsp; $(1)$称为diminishing returns property。为什么叫“回报减小”呢？举例。</p>
+<p>进一步说明，<br>$$<br>z(S\cup \{k\})-z(S)\geq 0, ~~S\subset N, ~~k\in N-S \tag{2}<br>$$<br>定义在$N$的子集上的实值函数$z(S)$满足$(1)$叫做submodular set function；同时满足$(1)$和$(2)$则叫做submodular nondecreasing set function。 </p>
 <p>另外，如果$z(\emptyset)=0$, $z$是normalized的。</p>
-<p><strong>3) 什么是Submodular Optimization？</strong><br>$$<br>\max_{S\subseteq N}\left{z(S):\left|S\right|\leq K, z(S) ~\rm{submodular} \right} \tag{3}<br>$$<br>找到$N$的一个子集$S$, $S$的基数（ Cardinality，即$S$中元素个数）不大于$K$，并使得$z(S)$取得最大值。</p>
-<p>变种<br>$$<br>\max_{S\subseteq N}{z(S):c(S)\leq K, z(S) ~\rm{submodular} }<br>$$</p>
+<p><strong>3) 什么是Submodular Optimization？</strong><br>$$<br>\max_{S\subseteq N}\{z(S):\left|S\right|\leq K, z(S) ~\rm{submodular} \} \tag{3}<br>$$<br>找到$N$的一个子集$S$, $S$的基数（ Cardinality，即$S$中元素个数）不大于$K$，并使得$z(S)$取得最大值。</p>
+<p>变种<br>$$<br>\max_{S\subseteq N}\{z(S):c(S)\leq K, z(S) ~\rm{submodular} \}<br>$$</p>
 <p>$$<br>c(S)=\sum_{s\in S}c(s)<br>$$</p>
 <h1 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h1><blockquote>
 <p>A natural way to find solutions to problem $(3)$ quickly is to start from the null set and add elements one at a time, taking at each step that element which increases $z$ the most.  </p>
 </blockquote>
-<p>marginal gain:<br>$$<br>\rho_{j}(S)=z(S\cup{j})-z(S)<br>$$<br><strong>1) 针对submodular nondecreasing set function的情况：</strong><br>Let $S^0=\emptyset$, and iteratively, in step $t$, adds $i$ which maximizes the marginal gain $i(t)=\underset{i\in N\setminus S^{t-1}}{\arg\max}\rho_{i}(S)$, set $S^{t-1}=S^{t-1}\cup{i(t)}$.<br>The algorithm stops, once it has selected $K$ elements.</p>
-<p><strong>2) 针对submodular set function的情况：</strong><br><em>Initialization</em>. Let $S^0=\emptyset$, $N^0=N$ and set $t=1$.<br><em>Iteration t</em>. Select $i(t)\in N^{t-1}$ for which $\rho_{i(t)}(S^{t-1})=\max_{i\in N^{t-1}}\rho_{i}(S^{t-1})$ with ties settled arbitrarily. Set $\rho_{t-1}=\rho_{i(t)}(S^{t-1})$.<br>​    <em>Step</em> 1. If $\rho_{t-1}\leq0$, stop with the set $S^{K^*}$, $K^*=t-1&lt;K$. If $\rho_{t-1}\gt0$, set $S^{t-1}=S^{t-1}\cup{i(t)}$ and $N^t=N^{t-1}-{i(t)}$. Continue.<br>​    <em>Step</em> 2. If $t=K$, stop with the set $S^{K^*}$, $K^*=K$. Otherwise set $t\rightarrow t+1$.</p>
+<p>marginal gain:<br>$$<br>\rho_{j}(S)=z(S\cup\{j\})-z(S)<br>$$<br><strong>1) 针对submodular nondecreasing set function的情况：</strong><br>Let $S^0=\emptyset$, and iteratively, in step $t$, adds $i(t)$ which maximizes the marginal gain $i(t)=\underset{i\in N\setminus S^{t-1}}{\arg\max}\rho_{i}(S)$, set $S^{t-1}=S^{t-1}\cup\{i(t)\}$.<br>The algorithm stops, once it has selected $K$ elements.</p>
+<p><strong>2) 针对submodular set function的情况：</strong><br><em>Initialization</em>. Let $S^0=\emptyset$, $N^0=N$ and set $t=1$.<br><em>Iteration t</em>. Select $i(t)\in N^{t-1}$ for which $\rho_{i(t)}(S^{t-1})=\max_{i\in N^{t-1}}\rho_{i}(S^{t-1})$ with ties settled arbitrarily. Set $\rho_{t-1}=\rho_{i(t)}(S^{t-1})$.<br>​    <em>Step</em> 1. If $\rho_{t-1}\leq0$, stop with the set $S^{K^*}$, $K^*=t-1&lt;K$. If $\rho_{t-1}\gt0$, set $S^{t-1}=S^{t-1}\cup\{i(t)\}$ and $N^t=N^{t-1}-\{i(t)\}$. Continue.<br>​    <em>Step</em> 2. If $t=K$, stop with the set $S^{K^*}$, $K^*=K$. Otherwise set $t\rightarrow t+1$.</p>
 <p>Submodular Optimization是NP-Hard的，Greedy Algorithm是一个近似解法。</p>
 <blockquote>
 <p>For example, when $z(S)$ is nondecreasing and $z(\emptyset)=0$, we show that a “greedy” heuristic always produces a solution whose value is at least $1-{[(K-1)/K]}^K$ times the optimal value. This bound can be achieved for each $K$ and has a limiting value of $(e-1)/e$, where $e$ is the base of the natural logarithm.</p>
